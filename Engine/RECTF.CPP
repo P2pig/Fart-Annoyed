@@ -1,6 +1,6 @@
 #include "RectF.h"
 
-RectF::RectF( float left, float right, float top, float bottom )
+RectF::RectF( float left, float top, float right, float bottom )
 	:
 	left( left ),
 	right( right ),
@@ -10,12 +10,12 @@ RectF::RectF( float left, float right, float top, float bottom )
 
 RectF::RectF( Vec2 topLeft, Vec2 bottomRight )
 	:
-	RectF( topLeft.x, bottomRight.x, topLeft.y, bottomRight.y )
+	RectF( topLeft.x, topLeft.y, bottomRight.x, bottomRight.y )
 {}
 
 RectF::RectF( Vec2 topLeft, float width, float height )
 	:
-	RectF( topLeft, Vec2( width, height ) )
+	RectF( topLeft, Vec2( width, height ) + topLeft )
 {}
 
 bool RectF::IsColliding( const RectF& other ) const
