@@ -1,5 +1,5 @@
-/****************************************************************************************** 
- *	Chili DirectX Framework Version 16.07.20											  *	
+/******************************************************************************************
+ *	Chili DirectX Framework Version 16.07.20											  *
  *	Game.cpp																			  *
  *	Copyright 2016 PlanetChili.net <http://www.planetchili.net>							  *
  *																						  *
@@ -25,13 +25,14 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball( Vec2( 50.0f, 50.0f ), Vec2( 1000.0f, 100.0f ) )
+	ball( Vec2( 150.0f, 300.0f ), Vec2( 3000.0f, 3000.0f ) ),
+	wall(0,0,Graphics::ScreenWidth,Graphics::ScreenHeight)
 {
 }
 
 void Game::Go()
 {
-	gfx.BeginFrame();	
+	gfx.BeginFrame();
 	UpdateModel();
 	ComposeFrame();
 	gfx.EndFrame();
@@ -40,6 +41,7 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	ball.Update( ft.Mark() );
+	bool KakaBang = ball.DoWallCollision( wall );
 }
 
 void Game::ComposeFrame()
