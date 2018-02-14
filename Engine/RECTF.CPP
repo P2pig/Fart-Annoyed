@@ -25,3 +25,9 @@ bool RectF::IsColliding( const RectF& other ) const
 		&& bottom >= other.top
 		&& top <= other.bottom;
 }
+
+RectF RectF::FromCenter( Vec2 center, float halfWidth, float halfHeight )
+{
+	Vec2 half( halfWidth, halfHeight );
+	return RectF( center - half, center + half );
+}

@@ -10,6 +10,7 @@ public:
 	RectF( Vec2 topLeft, Vec2 bottomRight );
 	RectF( Vec2 topLeft, float width, float height );
 	bool IsColliding( const RectF& other ) const;
+	static RectF FromCenter( Vec2 center, float halfWidth, float halfHeight);
 public:
 	float top;
 	float bottom;
