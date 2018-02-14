@@ -25,8 +25,9 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball( Vec2( 150.0f, 300.0f ), Vec2( 3000.0f, 3000.0f ) ),
-	wall(0,0,Graphics::ScreenWidth,Graphics::ScreenHeight)
+	ball( Vec2( 150.0f, 300.0f ), Vec2( 300.0f, 300.0f ) ),
+	wall(0,0,Graphics::ScreenWidth,Graphics::ScreenHeight)	 ,
+	soundPad(L"sounds\\arkpad.wav")
 {
 }
 
@@ -40,8 +41,12 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	ball.Update( ft.Mark() );
-	bool KakaBang = ball.DoWallCollision( wall );
+	float dt = ft.Mark();
+	ball.Update( dt );
+	if( ball.DoWallCollision( wall ) )
+	{
+		soundPad.Play();
+	}
 }
 
 void Game::ComposeFrame()
