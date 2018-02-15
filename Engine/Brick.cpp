@@ -14,7 +14,7 @@ void Brick::Draw( Graphics& gfx ) const
 	}
 }
 
-bool Brick::DoBallColliding( Ball & ball )
+bool Brick::DoBallCollision( Ball & ball )
 {																									   
 	if( !isDestroyed && rect.isOverLapping( ball.getRect() ) )
 	{
