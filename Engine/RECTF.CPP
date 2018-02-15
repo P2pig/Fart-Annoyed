@@ -18,7 +18,7 @@ RectF::RectF( Vec2 topLeft, float width, float height )
 	RectF( topLeft, Vec2( width, height ) + topLeft )
 {}
 
-bool RectF::IsColliding( const RectF& other ) const
+bool RectF::isOverLapping( const RectF& other ) const
 {
 	return right >= other.left
 		&& left <= other.right
