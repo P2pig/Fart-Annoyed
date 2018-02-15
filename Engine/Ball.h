@@ -13,6 +13,7 @@ public:
 	void BounceX();
 	void BounceY();
 	RectF getRect();
+	Vec2 getVelocity() const;
 private:
 	static constexpr float radius = 7.0f;
 	Vec2 pos;
