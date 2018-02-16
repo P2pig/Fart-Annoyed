@@ -29,3 +29,13 @@ RectF RectF::FromCenter( Vec2 center, float halfWidth, float halfHeight )
 	Vec2 half( halfWidth, halfHeight );
 	return RectF( center - half, center + half );
 }
+
+RectF RectF::getExpanded( const float padding ) const
+{
+	return RectF( left - padding, top - padding, right + padding, bottom + padding );
+}
+
+Vec2 RectF::GetCenter() const
+{
+	return Vec2( (left + right) / 2.0f, (top + bottom) / 2.0f ); 
+}
