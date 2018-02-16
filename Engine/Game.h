@@ -60,5 +60,6 @@ private:
 	FrameTimer ft;
 	Sound soundPad;
 	Sound soundBrick;
+	bool isGameOver = false;
 	/********************************/
 };

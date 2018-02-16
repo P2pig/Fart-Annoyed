@@ -25,7 +25,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball( Vec2( 300.0f + 16.0f, 300.0f ), Vec2( -300.0f, -300.0f ) ),
+	ball( Vec2( 300.0f + 16.0f, 300.0f ), Vec2( -3000.0f, -3000.0f ) ),
 	wall( 0, 0, Graphics::ScreenWidth, Graphics::ScreenHeight ),
 	soundPad( L"sounds\\arkpad.wav" ),
 	soundBrick( L"sounds\\arkbrick.wav" ),
@@ -46,14 +46,19 @@ Game::Game( MainWindow& wnd )
 void Game::Go()
 {
 	gfx.BeginFrame();
-	float elapsedTime = ft.Mark();
-	while( elapsedTime > 0.0f )
+
+	if( !isGameOver )
 	{
-		const float dt = std::min( 0.0025f, elapsedTime );
-		UpdateModel( dt );
-		elapsedTime -= dt;
-	}
+		float elapsedTime = ft.Mark();
+		while( elapsedTime > 0.0f )
+		{
+			const float dt = std::min( 0.0025f, elapsedTime );
+			UpdateModel( dt );
+			elapsedTime -= dt;
+		}
+
 	ComposeFrame();
+	}
 	gfx.EndFrame();
 }
 
@@ -105,6 +110,18 @@ void Game::UpdateModel( float dt )
 		pad.RestColdDown();
 		soundPad.Play();
 	}
+
+
+	// check all bricks if there's a brick not destroyed return true
+	bool temp = false;
+	for( auto& brick : bricks )
+	{
+		if( brick.getIsDestroyed() == false )
+		{
+			temp = true;
+		}
+	}
+	isGameOver = !temp;
 }
 
 void Game::ComposeFrame()
@@ -115,4 +132,9 @@ void Game::ComposeFrame()
 		b.Draw( gfx );
 	}
 	ball.Draw( gfx );
+
+	if( isGameOver )
+	{
+		wnd.ShowMessageBox( L"GameOver", L"You won" );
+	}
 }

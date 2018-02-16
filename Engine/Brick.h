@@ -13,6 +13,7 @@ public:
 	bool CheckBallCollision( Ball& ball );
 	void ExcuteBallCollision(Ball& ball);
 	Vec2 GetCenter();
+	bool getIsDestroyed();
 private:
 	RectF rect;
 	Color c;

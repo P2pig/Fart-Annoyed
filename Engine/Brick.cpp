@@ -47,3 +47,8 @@ Vec2 Brick::GetCenter()
 	return rect.GetCenter();
 }
 
+bool Brick::getIsDestroyed()
+{
+	return isDestroyed;
+}
+
