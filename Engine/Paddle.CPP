@@ -33,13 +33,29 @@ void Paddle::DoWallCollision( const RectF & wall )
 	}
 }
 
-bool Paddle::DoBallCollision( Ball & ball ) const
+bool Paddle::DoBallCollision( Ball & ball )
 {
-	const RectF rect = getRect();
-	if( rect.isOverLapping( ball.getRect() ) && ball.getVelocity().y > 0.0f )
+	if( !isColdDown )
 	{
-		ball.BounceY();
-		return true;
+		const RectF rect = getRect();
+		if( rect.isOverLapping( ball.getRect() ) )
+		{
+			Vec2 ballPos = ball.getPosition();
+			if( std::signbit( ball.getVelocity().x ) == std::signbit( (ballPos - pos).x ) )
+			{
+				ball.BounceY();
+			}
+			else if( ballPos.x > rect.left && ballPos.x < rect.right )
+			{
+				ball.BounceY();
+			}
+			else
+			{
+				ball.BounceX();
+			}
+			isColdDown = true;
+			return true;
+		}
 	}
 	return false;
 }
@@ -56,4 +72,9 @@ void Paddle::Draw( Graphics & gfx ) const
 RectF Paddle::getRect() const
 {
 	return RectF::FromCenter( pos, halfWidth, halfHeight );
+}
+
+void Paddle::RestColdDown()
+{
+	isColdDown = false;
 }

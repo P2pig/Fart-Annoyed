@@ -85,6 +85,7 @@ void Game::UpdateModel()
 	}
 	if( isCollision )
 	{
+		pad.RestColdDown();
 		bricks[currentColIndex].ExcuteBallCollision( ball );
 		soundBrick.Play();
 	}
@@ -96,7 +97,8 @@ void Game::UpdateModel()
 
 	if( ball.DoWallCollision( wall ) )
 	{
-		// soundPad.Play();
+		pad.RestColdDown();
+		soundPad.Play();
 	}
 }
 

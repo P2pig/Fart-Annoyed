@@ -12,9 +12,10 @@ public:
 	Paddle( const Vec2& pos, float halfWidth, float halfHright );
 	void Update( Keyboard& kbd, float dt );
 	void DoWallCollision( const RectF& wall );
-	bool DoBallCollision( Ball& ball ) const;
+	bool DoBallCollision( Ball& ball );
 	void Draw( Graphics& gfx ) const;
 	RectF getRect() const;
+	void RestColdDown();
 private:
 	static constexpr float wingWidth = 18.0f;
 	Color wingColor = Colors::Red;
@@ -23,4 +24,5 @@ private:
 	float halfHeight;
 	float speed = 300.0f;
 	Vec2 pos;
+	bool isColdDown = false;
 };
