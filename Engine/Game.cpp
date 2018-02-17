@@ -32,7 +32,8 @@ Game::Game( MainWindow& wnd )
 	soundBrick( L"Sounds\\arkbrick.wav" ),
 	soundFart( L"Sounds\\fart.wav" ),
 	soundReady( L"Sounds\\ready.wav" ),
-	pad( Vec2( 400.0f, 550.0f ), 32.0f, 6.0f )
+	pad( Vec2( 400.0f, 550.0f ), 32.0f, 6.0f ),
+	lifeCounter( { 30.0f,30.0f }, 3 )
 {
 	const Vec2 gridTopLeft( walls.GetInnerBounds().left, walls.GetInnerBounds().top + topSpace );
 	int i = 0;
@@ -117,7 +118,7 @@ void Game::UpdateModel( float dt )
 		}
 		else if( ballWallColResult == 2 )
 		{
-			gameState = 2;
+			StartRound();
 			soundFart.Play();
 		}
 	}
@@ -141,9 +142,16 @@ void Game::UpdateModel( float dt )
 
 void Game::StartRound()
 {
-	curWaitTime = 0.0f;
-	soundReady.Play();
-	gameState = 3;
+	if( lifeCounter.ConsumeLife() )
+	{
+		curWaitTime = 0.0f;
+		soundReady.Play();
+		gameState = 3;
+	}
+	else
+	{
+		gameState = 2; 
+	}
 }
 
 void Game::ComposeFrame()
@@ -151,6 +159,7 @@ void Game::ComposeFrame()
 	if( gameState == 1 || gameState == 3)
 	{
 		pad.Draw( gfx );
+		lifeCounter.Draw( gfx ); 
 	}
 	// draw ball only if playing 
 	if( gameState == 1 )
