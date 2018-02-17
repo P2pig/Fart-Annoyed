@@ -4,9 +4,9 @@
 
 Ball::Ball( const Vec2 & pos_in,const Vec2 & vel_in )
 	:
-	pos( pos_in ),
-	vel( vel_in )
+	pos( pos_in )
 {
+	SetDirection( vel_in );
 }
 
 void Ball::Draw( Graphics & gfx ) const
@@ -74,4 +74,9 @@ Vec2 Ball::GetVelocity() const
 Vec2 Ball::GetPosition() const
 {
 	return pos;
+}
+
+void Ball::SetDirection( const Vec2 & dir )
+{		
+	vel = dir.GetNormalized() * speed;
 }
