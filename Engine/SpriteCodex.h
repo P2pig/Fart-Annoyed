@@ -12,4 +12,6 @@ public:
 	static void DrawTitle( const Vec2& center, Graphics& gfx );
 	// centered drawing of 84x64 sprite
 	static void DrawGameOver( const Vec2& center, Graphics& gfx );
+	// centered drawing of 104x19 sprite 
+	static void DrawReady( const Vec2& center, Graphics& gfx );
 };
