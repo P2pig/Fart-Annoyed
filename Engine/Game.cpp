@@ -125,7 +125,14 @@ void Game::UpdateModel( float dt )
 }
 
 void Game::ComposeFrame()
-{
+{						   
+	int tempX = 200;
+	int tempY = 200;
+	int tempSize = 50;
+	gfx.DrawIsoRightTriUL( tempX, tempY, tempSize, Colors::Red );
+	gfx.DrawIsoRightTriUR( tempX+50+5, tempY, tempSize, Colors::Red );
+	gfx.DrawIsoRightTriBL( tempX, tempY+55, tempSize, Colors::Red );
+	gfx.DrawIsoRightTriBR( tempX+55, tempY+55, tempSize, Colors::Red );
 	if( !gameIsOver )
 	{
 		ball.Draw( gfx );
