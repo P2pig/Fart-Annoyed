@@ -1,5 +1,5 @@
-/****************************************************************************************** 
- *	Chili DirectX Framework Version 16.07.20											  *	
+/******************************************************************************************
+ *	Chili DirectX Framework Version 16.07.20											  *
  *	Game.cpp																			  *
  *	Copyright 2016 PlanetChili.net <http://www.planetchili.net>							  *
  *																						  *
@@ -26,16 +26,16 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball( Vec2( 300.0f + 24.0f,300.0f ),Vec2( -1.0f,-1.0f ) ),
-	walls( 0.0f,float( gfx.ScreenWidth ),0.0f,float( gfx.ScreenHeight ) ),
+	ball( Vec2( 300.0f + 24.0f, 300.0f ), Vec2( -1.0f, -1.0f ) ),
+	walls( Graphics::GetScreenRect().GetExpanded( -40.0f ), 40.0f, { 20,60,200 } ),
 	soundPad( L"Sounds\\arkpad.wav" ),
 	soundBrick( L"Sounds\\arkbrick.wav" ),
 	soundFart( L"Sounds\\fart.wav" ),
-	pad( Vec2( 400.0f,500.0f ),50.0f,15.0f )
+	pad( Vec2( 400.0f, 500.0f ), 50.0f, 15.0f )
 {
 	const Color colors[4] = { Colors::Red,Colors::Green,Colors::Blue,Colors::Cyan };
 
-	const Vec2 topLeft( 40.0f,40.0f );
+	const Vec2 topLeft( 40.0f, 40.0f );
 
 	int i = 0;
 	for( int y = 0; y < nBricksDown; y++ )
@@ -44,8 +44,8 @@ Game::Game( MainWindow& wnd )
 		for( int x = 0; x < nBricksAcross; x++ )
 		{
 			bricks[i] = Brick( RectF(
-				topLeft + Vec2( x * brickWidth,y * brickHeight ),
-				brickWidth,brickHeight ),c );
+				topLeft + Vec2( x * brickWidth, y * brickHeight ),
+				brickWidth, brickHeight ), c );
 			i++;
 		}
 	}
@@ -57,7 +57,7 @@ void Game::Go()
 	float elapsedTime = ft.Mark();
 	while( elapsedTime > 0.0f )
 	{
-		const float dt = std::min( 0.0025f,elapsedTime );
+		const float dt = std::min( 0.0025f, elapsedTime );
 		UpdateModel( dt );
 		elapsedTime -= dt;
 	}
@@ -66,11 +66,11 @@ void Game::Go()
 }
 
 void Game::UpdateModel( float dt )
-{	
+{
 	if( !gameIsOver )
 	{
 		pad.Update( wnd.kbd, dt );
-		pad.DoWallCollision( walls );
+		pad.DoWallCollision( walls.GetInnerBounds() );
 
 		ball.Update( dt );
 
@@ -111,7 +111,7 @@ void Game::UpdateModel( float dt )
 		{
 			soundPad.Play();
 		}
-		const int ballWallColResult = ball.DoWallCollision( walls );
+		const int ballWallColResult = ball.DoWallCollision( walls.GetInnerBounds() );
 		if( ballWallColResult == 1 )
 		{
 			pad.ResetCooldown();
@@ -136,4 +136,5 @@ void Game::ComposeFrame()
 	{
 		b.Draw( gfx );
 	}
+	walls.Draw( gfx );
 }
