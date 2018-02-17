@@ -110,10 +110,16 @@ void Game::UpdateModel( float dt )
 		{
 			soundPad.Play();
 		}
+		
 		const int ballWallColResult = ball.DoWallCollision( walls.GetInnerBounds() );
 		if( ballWallColResult == 1 )
 		{
-			pad.ResetCooldown();
+			// only reset cooldown if not still colliding with ball
+			// (helps prevent weird shit when ball is trapped against wall)
+			if( !pad.GetRect().IsOverlappingWith(ball.GetRect()) )
+			{
+				pad.ResetCooldown();
+			}
 			soundPad.Play();
 		}
 		else if( ballWallColResult == 2 )
@@ -157,7 +163,7 @@ void Game::StartRound()
 
 void Game::ResetBall()
 {
-	ball = Ball( Graphics::GetScreenRect().GetCenter(), Vec2( -0.5f, -1.0f ) ),
+	ball = Ball( Graphics::GetScreenRect().GetCenter(), Vec2( -0.55f, -1.0f ) );
 }
 
 void Game::ComposeFrame()
