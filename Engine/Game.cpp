@@ -20,6 +20,7 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
+#include "Beveler.h"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -57,7 +58,7 @@ void Game::Go()
 	while( elapsedTime > 0.0f )
 	{
 		const float dt = std::min( 0.0025f,elapsedTime );
-		UpdateModel( dt );
+		//UpdateModel( dt );
 		elapsedTime -= dt;
 	}
 	ComposeFrame();
@@ -125,14 +126,7 @@ void Game::UpdateModel( float dt )
 }
 
 void Game::ComposeFrame()
-{						   
-	int tempX = 200;
-	int tempY = 200;
-	int tempSize = 50;
-	gfx.DrawIsoRightTriUL( tempX, tempY, tempSize, Colors::Red );
-	gfx.DrawIsoRightTriUR( tempX+50+5, tempY, tempSize, Colors::Red );
-	gfx.DrawIsoRightTriBL( tempX, tempY+55, tempSize, Colors::Red );
-	gfx.DrawIsoRightTriBR( tempX+55, tempY+55, tempSize, Colors::Red );
+{
 	if( !gameIsOver )
 	{
 		ball.Draw( gfx );
@@ -142,5 +136,4 @@ void Game::ComposeFrame()
 	{
 		b.Draw( gfx );
 	}
-	pad.Draw( gfx );
 }
