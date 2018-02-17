@@ -58,7 +58,7 @@ void Game::Go()
 	while( elapsedTime > 0.0f )
 	{
 		const float dt = std::min( 0.0025f,elapsedTime );
-		//UpdateModel( dt );
+		UpdateModel( dt );
 		elapsedTime -= dt;
 	}
 	ComposeFrame();
