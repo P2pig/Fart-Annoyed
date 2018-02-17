@@ -240,6 +240,42 @@ Graphics::Graphics( HWNDKey& key )
 		_aligned_malloc( sizeof( Color ) * Graphics::ScreenWidth * Graphics::ScreenHeight,16u ) );
 }
 
+void Graphics::DrawIsoRightTriUR( int x, int y, int size, Color c )
+{
+	for( int loop_y = y; loop_y < y + size; loop_y++ )
+	{
+		const int cur_line = loop_y - y;
+		for( int loop_x = x + cur_line; loop_x < x + size; loop_x++ )
+		{
+			PutPixel( loop_x, loop_y, c );
+		}
+	}
+}
+
+void Graphics::DrawIsoRightTriBL( int x, int y, int size, Color c )
+{
+	for( int loop_y = y; loop_y < y + size; loop_y++ )
+	{
+		const int cur_line = loop_y - y;
+		for( int loop_x = x; loop_x < x + cur_line; loop_x++ )
+		{
+			PutPixel( loop_x, loop_y, c );
+		}
+	}
+}
+
+void Graphics::DrawIsoRightTriBR( int x, int y, int size, Color c )
+{
+	for( int loop_y = y; loop_y < y + size; loop_y++ )
+	{
+		const int cur_line = loop_y - y;
+		for( int loop_x = x + size - cur_line; loop_x < x + size; loop_x++ )
+		{
+			PutPixel( loop_x, loop_y, c );
+		}
+	}
+}
+
 Graphics::~Graphics()
 {
 	// free sysbuffer memory (aligned free)
@@ -349,6 +385,18 @@ void Graphics::DrawCircle( int x,int y,int radius,Color c )
 			{
 				PutPixel( x_loop,y_loop,c );
 			}
+		}
+	}
+}
+
+void Graphics::DrawIsoRightTriUL( int x, int y, int size, Color c )
+{
+	for( int loop_y = y; loop_y < y + size; loop_y++ )
+	{
+		const int cur_line = loop_y - y;
+		for( int loop_x = x; loop_x < x + size - cur_line; loop_x++ )
+		{
+			PutPixel( loop_x, loop_y, c );
 		}
 	}
 }

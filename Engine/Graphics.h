@@ -63,51 +63,10 @@ public:
 		DrawRect( int( rect.left ), int( rect.top ), int( rect.right ), int( rect.bottom ), c );
 	}
 	void DrawCircle( int x, int y, int radius, Color c );
-	void DrawIsoRightTriUL( int x, int y, int size, Color c )
-	{
-		for( int loop_y = y; loop_y < y + size; loop_y++ )
-		{
-			const int cur_line = loop_y - y;
-			for( int loop_x = x; loop_x < x + size - cur_line; loop_x++ )
-			{
-				PutPixel( loop_x, loop_y, c );
-			}
-		}
-	}
-	void DrawIsoRightTriUR( int x, int y, int size, Color c )
-	{
-		for( int loop_y = y; loop_y < y + size; loop_y++ )
-		{
-			const int cur_line = loop_y - y;
-			for( int loop_x = x + cur_line; loop_x < x + size; loop_x++ )
-			{
-				PutPixel( loop_x, loop_y, c );
-			}
-		}
-	}
-	void DrawIsoRightTriBL( int x, int y, int size, Color c )
-	{
-		for( int loop_y = y; loop_y < y + size; loop_y++ )
-		{
-			const int cur_line = loop_y - y;
-			for( int loop_x = x; loop_x < x + cur_line; loop_x++ )
-			{
-				PutPixel( loop_x, loop_y, c );
-			}
-		}
-	}
-
-	void DrawIsoRightTriBR( int x, int y, int size, Color c )
-	{
-		for( int loop_y = y; loop_y < y + size; loop_y++ )
-		{
-			const int cur_line = loop_y - y;
-			for( int loop_x = x + size - cur_line; loop_x < x + size; loop_x++ )
-			{
-				PutPixel( loop_x, loop_y, c );
-			}
-		}
-	}
+	void DrawIsoRightTriUL( int x, int y, int size, Color c );
+	void DrawIsoRightTriUR( int x, int y, int size, Color c );
+	void DrawIsoRightTriBL( int x, int y, int size, Color c );
+	void DrawIsoRightTriBR( int x, int y, int size, Color c );
 
 	~Graphics();
 private:
