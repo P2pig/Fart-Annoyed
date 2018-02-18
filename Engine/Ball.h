@@ -8,9 +8,9 @@ class Ball
 public:
 	enum class WallCollisionResult
 	{
-		NoCollision,
-		WallCollision,
-		BottomCollision
+		None,
+		SideTop,
+		Bottom
 	};
 public:
 	Ball() = default;

@@ -22,31 +22,31 @@ void Ball::Update( float dt )
 // return: 0=nada 1=hit wall 2=hit bottom
 Ball::WallCollisionResult Ball::DoWallCollision( const RectF & walls )
 {
-	WallCollisionResult collisionResult = WallCollisionResult::NoCollision;
+	WallCollisionResult collisionResult = WallCollisionResult::None;
 	const RectF rect = GetRect();
 	if( rect.left < walls.left )
 	{
 		pos.x += walls.left - rect.left;
 		ReboundX();
-		collisionResult = WallCollisionResult::WallCollision;
+		collisionResult = WallCollisionResult::SideTop;
 	}
 	else if( rect.right > walls.right )
 	{
 		pos.x -= rect.right - walls.right;
 		ReboundX();
-		collisionResult = WallCollisionResult::WallCollision;
+		collisionResult = WallCollisionResult::SideTop;
 	}
 	if( rect.top < walls.top )
 	{
 		pos.y += walls.top - rect.top;
 		ReboundY();
-		collisionResult = WallCollisionResult::WallCollision;
+		collisionResult = WallCollisionResult::SideTop;
 	}
 	else if( rect.bottom > walls.bottom )
 	{
 		pos.y -= rect.bottom - walls.bottom;
 		ReboundY();
-		collisionResult = WallCollisionResult::BottomCollision;
+		collisionResult = WallCollisionResult::Bottom;
 	}
 	return collisionResult;
 }
