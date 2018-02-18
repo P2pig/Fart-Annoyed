@@ -67,9 +67,11 @@ void Game::Go()
 
 void Game::UpdateModel( float dt )
 {
-	if( gameState == 1 )
+	switch( gameState )
 	{
-		pad.Update( wnd.kbd,dt );
+	case State::Playing:
+	{
+		pad.Update( wnd.kbd, dt );
 		pad.DoWallCollision( walls.GetInnerBounds() );
 
 		ball.Update( dt );
@@ -129,7 +131,8 @@ void Game::UpdateModel( float dt )
 			soundFart.Play();
 		}
 	}
-	else if( gameState == 0 )
+	break;
+	case State::NotStarted:
 	{
 		// wait on title screen until enter is pressed
 		if( wnd.kbd.KeyIsPressed( VK_RETURN ) )
@@ -137,13 +140,16 @@ void Game::UpdateModel( float dt )
 			StartRound();
 		}
 	}
-	else if( gameState == 3 )
+	break;
+	case State::ReadyWait:
 	{
 		// check to see if ready wait period is over
 		if( (curWaitTime += dt) > readyWaitTime )
 		{
-			gameState = 1;
+			gameState = State::Playing;
 		}
+	}
+	break;
 	}
 }
 
@@ -154,11 +160,11 @@ void Game::StartRound()
 	{
 		curWaitTime = 0.0f;
 		soundReady.Play();
-		gameState = 3;
+		gameState = State::ReadyWait;
 	}
 	else
 	{
-		gameState = 2;
+		gameState = State::GameOver;
 	}
 }
 
@@ -169,19 +175,27 @@ void Game::ResetBall()
 
 void Game::ComposeFrame()
 {
-	// draw pad and life counter if playing or waiting
-	if( gameState == 1 || gameState == 3 )
+	switch( gameState )
 	{
+	case Game::State::NotStarted:
+		SpriteCodex::DrawTitle( Graphics::GetScreenRect().GetCenter(), gfx );
+		break;
+	case Game::State::ReadyWait:
 		pad.Draw( gfx );
-		lifeCounter.Draw( gfx );
-	}
-	// draw ball only if playing
-	if( gameState == 1 )
-	{
+		lifeCounter.Draw( gfx ); 
+		SpriteCodex::DrawReady( Graphics::GetScreenRect().GetCenter(), gfx );
+		break;
+	case Game::State::Playing:
+		pad.Draw( gfx );
+		lifeCounter.Draw( gfx ); 
 		ball.Draw( gfx );
+		break;
+	case Game::State::GameOver:
+		SpriteCodex::DrawGameOver( Graphics::GetScreenRect().GetCenter(), gfx );
+		break;
 	}
 	// draw bricks and wall always, except for title screen
-	if( gameState != 0 )
+	if( gameState != State::NotStarted )
 	{
 		for( const Brick& b : bricks )
 		{
@@ -189,16 +203,6 @@ void Game::ComposeFrame()
 		}
 		walls.Draw( gfx );
 	}
-	if( gameState == 0 )
-	{
-		SpriteCodex::DrawTitle( Graphics::GetScreenRect().GetCenter(),gfx );
-	}
-	else if( gameState == 2 )
-	{
-		SpriteCodex::DrawGameOver( Graphics::GetScreenRect().GetCenter(),gfx );
-	}
-	else if( gameState == 3 )
-	{
-		SpriteCodex::DrawReady( Graphics::GetScreenRect().GetCenter(),gfx );
-	}
+
+
 }
